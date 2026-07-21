@@ -7,7 +7,7 @@ let counter = 0;
 
 // Increase canvas height and width to make the game area larger
 canvas.height = 800;
-canvas.width = 600;
+canvas.width = 700;
 
 // Add border around the game area
 ctx.strokeStyle = 'black';
