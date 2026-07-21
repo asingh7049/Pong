@@ -1,0 +1,70 @@
+<style>
+/* Add styles here */
+  #gameCanvas {
+    border: 1px solid rgb(49, 37, 37);
+  }
+</style>
+
+// ... existing code ...
+
+// Create a basic ball object with properties (x, y, velocity) and methods (draw(), update())
+class Ball {
+  constructor(x, y, radius, velocityX, velocityY) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.velocityX = velocityX;
+    this.velocityY = velocityY;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'red';
+    ctx.fill();
+  }
+
+  update() {
+    // ... existing code ...
+
+    // Update collision detection for ball on platform
+    const platformRect = { x: platform.x, y: platform.y, width: platform.width, height: platform.height };
+    if (this.y + this.radius > platformRect.y && this.y - this.radius < platformRect.y + platformRect.height &&
+        this.x + this.radius > platformRect.x && this.x - this.radius < platformRect.x + platformRect.width) {
+      counter++;
+      this.velocityX *= 1.01; // Increase speed by 1% each hit
+    }
+  }
+}
+
+// Create a platform object with properties (x, y, width, height)
+class Platform {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  draw() {
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+}
+
+// Create a ball object
+const ball = new Ball(200, 300, 20, 3, -4);
+
+// Draw game elements on the canvas (existing code)
+
+function animate() {
+  // Update each object's position and draw it
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  platform.draw();
+  ball.update();
+  ball.draw();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
